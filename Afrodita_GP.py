@@ -84,41 +84,41 @@ class Producto:
         }
 
     def __str__(self):
-        return f"{self.nombre} - COD:{self.código}"
+        return f"{self.nombre} - COD:{self.codigo}"
 
 class Calzado(Producto):
-    def __init__(self, nombre, codigo, precio, cantidad_stock, talle, color, tipo_calzado):
+    def __init__(self, nombre, codigo, precio, cantidad_stock, talle, color, tipo):
         super().__init__(nombre, codigo, precio, cantidad_stock, talle, color)
-        self.__tipo_calzado = tipo_calzado
+        self.__tipo = tipo
 
     @property
-    def tipo_calzado(self):
-        return self.__tipo_calzado
+    def tipo(self):
+        return self.__tipo
 
     def to_dict(self):
         data = super().to_dict()
-        data["tipo_calzado"] = self.tipo_calzado
+        data["tipo"] = self.tipo
         return data
 
     def __str__(self):
-        return f"{super().__str__()} - Tipo de calzado: {self.tipo_calzado}"
+        return f"{super().__str__()} - Tipo de calzado: {self.tipo}"
 
 class Bikini(Producto):
-    def __init__(self,nombre, codigo, precio, cantidad_stock, talle, color, tipo_bikini ):
+    def __init__(self,nombre, codigo, precio, cantidad_stock, talle, color, tipo ):
         super().__init__(nombre, codigo, precio, cantidad_stock, talle, color)
-        self.__tipo_bikini = tipo_bikini
+        self.__tipo = tipo
 
     @property
-    def tipo_bikini(self):
-        return self.__tipo_bikini
+    def tipo(self):
+        return self.__tipo
 
     def to_dict(self):
         data = super().to_dict()
-        data["tipo_bikini"] = self.tipo_bikini
+        data["tipo_bikini"] = self.tipo
         return data
 
     def __str__(self):
-        return f"{super().__str__()} - Tipo de Bikini: {self.tipo_bikini}"
+        return f"{super().__str__()} - Tipo de Bikini: {self.tipo}"
 
 class Gestion_productos:
     def __init__(self, archivo):
@@ -169,8 +169,9 @@ class Gestion_productos:
                 print(f'Producto encontrado con código: {codigo}')
             else:
                 print(f'No se encontró producto con código: {codigo}')
+                print({producto})
 
-        except Exception as e:
+        except Exception as e: 
             print('Error al leer producto: {e}')
 
     def actualizar_producto(self, codigo, nuevo_precio):
@@ -196,3 +197,22 @@ class Gestion_productos:
                 print(f'No se encontró producto con COD:{codigo}')
         except Exception as e:
             print(f'Error al eliminar el producto: {e}')
+    def mostrar_productos(self):
+        try:
+            datos = self.leer_datos()
+            if datos:
+                print('=============== Listado de Stock Disponible ==============')
+                for codigo, producto_data in datos.items():
+                    print(f"COD: {codigo}")
+                    print(f"  Nombre: {producto_data['nombre']}")
+                    print(f"  Precio: {producto_data['precio']}")
+                    print(f"  Cantidad Total: {producto_data['cantidad_stock']}")
+                    print(f" Talle: {producto_data['talle']}")
+                    print(f" Tipo: {producto_data['tipo']}")
+                    print(f" Color: {producto_data['color']}")
+                    
+                print('=========================<3===============================')
+            else:
+                print('No hay Stock disponible .')
+        except Exception as e:
+            print(f'Error : {e}')

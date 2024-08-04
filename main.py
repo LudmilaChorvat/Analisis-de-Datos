@@ -5,7 +5,7 @@ from Afrodita_GP import (
     Calzado,
     Bikini,
     Gestion_productos,
-)1
+)
 
 def limpiar_pantalla():
     ''' Limpiar la pantalla según el sistema operativo'''
@@ -35,11 +35,11 @@ def agregar_producto(gestion, tipo_producto):
         color = str(input('Ingrese color del producto: '))
 
         if tipo_producto == '1':
-            tipo_calzado = input('Ingrese tipo de calzado (sandalia/bota/zapatilla): ')
-            producto = Calzado(nombre, codigo, precio, cantidad_stock, talle, color, tipo_calzado)
+            tipo = input('Ingrese tipo de calzado (sandalia/bota/zapatilla): ')
+            producto = Calzado(nombre, codigo, precio, cantidad_stock, talle, color, tipo)
         elif tipo_producto == '2':
-            tipo_bikini = input('Ingrese tipo de cbikini (entera/2 partes/ 3 partes): ')
-            producto = Bikini(nombre, codigo, precio, cantidad_stock, talle, color, tipo_bikini)
+            tipo = input('Ingrese tipo de cbikini (entera/2 partes/ 3 partes): ')
+            producto = Bikini(nombre, codigo, precio, cantidad_stock, talle, color, tipo)
         else:
             print('Opción inválida')
             return
@@ -68,13 +68,13 @@ def eliminar_producto_por_COD(gestion):
     gestion.eliminar_producto(codigo)
     input('Presione enter para continuar...')
 
-def mostrar_todos_los_productos(gestion):
-    print('=============== Listado completo de los  Productos ==============')
+def mostrar_productos(gestion):
+    print('=============== Listado de Stock Disponible ==============')
     for producto in gestion.leer_datos().values():
-        if 'tipo_calzado' in producto:
-            print(f"{producto['nombre']} - Tipo {producto['tipo_calzado']}")
+        if 'tipo' in producto:
+            print(f"{producto['nombre']} - Tipo {producto['tipo']}")
         else:
-            print(f"{producto['nombre']} - Tipo {producto['tipo_bikini']}")
+            print(f"{producto['nombre']} - Tipo {producto['tipo']}")
     print('================================<3====================================')
     input('Presione enter para continuar...')
 
@@ -100,7 +100,7 @@ if __name__ == "__main__":
             eliminar_producto_por_COD(gestion)
 
         elif opcion == '6':
-            mostrar_todos_los_productos(gestion)
+            mostrar_productos(gestion)
 
         elif opcion == '7':
             print('Saliendo del programa...')
