@@ -32,14 +32,15 @@ def agregar_producto(gestion, tipo_producto):
         precio = float(input('Ingrese precio del producto: '))
         cantidad_stock=int(input('Ingrese cantidad de stock del producto: '))
         talle = int(input('Ingrese talle del producto: '))
-        color = str(input('Ingrese color del producto: '))
 
         if tipo_producto == '1':
-            tipo = input('Ingrese tipo de calzado (sandalia/bota/zapatilla): ')
-            producto = Calzado(nombre, codigo, precio, cantidad_stock, talle, color, tipo)
+            tipo_calzado = input('Ingrese tipo de calzado (sandalia/bota/zapatilla): ')
+            color = str(input('Ingrese color del producto: '))
+            producto = Calzado(nombre, codigo, precio, cantidad_stock, talle, color, tipo_calzado) #tengo que pasarle todos los atributos para que pueda ser ejecutada la clase y quede guardada en la instancia producto
         elif tipo_producto == '2':
-            tipo = input('Ingrese tipo de cbikini (entera/2 partes/ 3 partes): ')
-            producto = Bikini(nombre, codigo, precio, cantidad_stock, talle, color, tipo)
+            tipo_bikini = input('Ingrese tipo de cbikini (entera/2 partes/ 3 partes): ')
+            color = str(input('Ingrese color del producto: '))
+            producto = Bikini(nombre, codigo, precio, cantidad_stock, talle, color, tipo_bikini)
         else:
             print('Opción inválida')
             return
@@ -68,19 +69,14 @@ def eliminar_producto_por_COD(gestion):
     gestion.eliminar_producto(codigo)
     input('Presione enter para continuar...')
 
-def mostrar_productos(gestion):
-    print('=============== Listado de Stock Disponible ==============')
-    for producto in gestion.leer_datos().values():
-        if 'tipo' in producto:
-            print(f"{producto['nombre']} - Tipo {producto['tipo']}")
-        else:
-            print(f"{producto['nombre']} - Tipo {producto['tipo']}")
+def mostrar_todos_los_productos(gestion):
+    gestion.mostrar_productos()
     print('================================<3====================================')
     input('Presione enter para continuar...')
 
 if __name__ == "__main__":
-    archivo_productos = 'productos_db.json'
-    gestion = Gestion_productos(archivo_productos)
+    archivo_productos = 'productos_db.json'                     #Crea el json
+    gestion = Gestion_productos(archivo_productos)              #El metodo gestion colaboradores trabaja sobre el json creado previamente y se guarda en la variable gestion
 
     while True:
         limpiar_pantalla()
@@ -100,7 +96,7 @@ if __name__ == "__main__":
             eliminar_producto_por_COD(gestion)
 
         elif opcion == '6':
-            mostrar_productos(gestion)
+            mostrar_todos_los_productos(gestion)
 
         elif opcion == '7':
             print('Saliendo del programa...')
